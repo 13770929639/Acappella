@@ -1,0 +1,22 @@
+/* miniprogram/pages/solo/solo.wxss */
+@import '../../component/colorUI/colorui.wxss';
+@import '../../component/colorUI/icon.wxss';
+.hit{
+
+  color:#838d97;
+  margin-top:400px;
+}
+.blue{
+  color:#838d97;
+}
+
+.im{
+  left:5%;
+  top:10%;
+  position: absolute;
+}
+.butt{
+  height:30px;
+  border:1px solid #838d97;
+  border-radius:5px;
+}

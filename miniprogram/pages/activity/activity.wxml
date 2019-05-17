@@ -1,0 +1,175 @@
+<!--miniprogram/pages/activity/activity.wxml-->
+
+<scroll-view scroll-x class="bg-gradual-blue nav">
+  <view class='flex text-center'>
+    <view class="cu-item flex-sub {{index==TabCur?'text-white cur':''}}" wx:for="{{tabs}}" wx:key bindtap='tabSelect' data-id="{{index}}">
+      {{item}}
+    </view>
+  </view>
+</scroll-view>
+<view wx:key wx:if="{{TabCur==0}}">
+  <view class="cu-bar search  bg-white">
+    <view class='search-form round'>
+      <text class="icon-search "></text>
+      <input type="text" placeholder="输入关键词搜索" confirm-type="search"></input>
+    </view>
+    <view class='action'>
+      <button class='cu-btn line-cyan shadow-blur round'>搜索</button>
+    </view>
+  </view>
+  <view class="cu-card article">
+    <view wx:for="{{activitys}}" class="cu-item shadow">
+      <view class="title">{{item.name}}</view>
+      <view class="content">
+        <view class="desc">
+          <view class='text-content' style="color:#838d97">
+            <view>备注：{{item.hint}}</view>
+            <view>时间：{{item.time}}</view>
+            <view>地点：{{item.position}}</view>
+            
+          </view>
+          <view class=" text-blue">联系方式：{{item.phone}}</view>
+          <view class="flex justify-between">
+            <view class=' radius'>
+              <view class="cu-capsule round">
+                <view class='cu-tag bg-blue '>
+                  <text class='icon-people'></text>
+                </view>
+                <view class="cu-tag line-blue">
+                  {{item.counts}}/{{item.totalcounts}}
+                </view>
+              </view>
+            </view>
+            <view class=' radius'>
+              <button class='cu-btn round bg-gradual-blue shadow-blur'>参加</button>
+            </view>
+          </view>
+
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view wx:key wx:if="{{TabCur==1}}">
+  <view class="padding text-center" bindtap="showModal" data-target="bottomModal">
+    <view class="padding radius shadow-warp bg-white">
+      <text class='icon-add'></text> 发起新活动
+    </view>
+  </view>
+  <view class="cu-card article">
+    <view wx:for="{{mypublish}}" class="cu-item shadow">
+      <view class="title">{{item.name}}</view>
+      <view class="content">
+        <view class="desc">
+           <view class='text-content' style="color:#838d97">
+            <view>备注：{{item.hint}}</view>
+            <view>时间：{{item.time}}</view>
+            <view>地点：{{item.position}}</view>
+            
+          </view>
+          <view class=" text-blue">联系方式：{{item.phone}}</view>
+          <view class="flex justify-between">
+            <view class=' radius'>
+              <view class="cu-capsule round">
+                <view class='cu-tag bg-blue '>
+                  <text class='icon-people'></text>
+                </view>
+                <view class="cu-tag line-blue">
+                  {{item.counts}}/{{item.totalcounts}}
+                </view>
+              </view>
+            </view>
+            <view class=' radius'>
+              <button class='cu-btn  round line-red'>删除</button>
+            </view>
+          </view>
+
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white">
+      <view class='action text-blue' bindtap='hideModal'>取消</view>
+      <view class='action text-green' bindtap='hideModal'>发布</view>
+    </view>
+    <view class='padding-xl'>
+      <form>
+
+        <view class="cu-form-group margin-top">
+          <view class='title'>活动名称</view>
+          <input placeholder="" class='radius' name='input'></input>
+        </view>
+
+        <view class="cu-form-group">
+          <view class='title'>日期选择</view>
+          <picker mode="date" value="{{date}}" start="2015-09-01" end="2020-09-01" bindchange="DateChange">
+            <view class="picker">
+              {{date}}
+            </view>
+          </picker>
+        </view>
+
+        <view class="cu-form-group">
+          <view class='title'>时间选择</view>
+          <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="TimeChange">
+            <view class="picker">
+              {{time}}
+            </view>
+          </picker>
+        </view>
+
+        <view class="cu-form-group margin-top">
+          <view class='title'>地址</view>
+          <input placeholder="" class='radius' name='input'></input>
+        </view>
+
+        <view class="cu-form-group margin-top">
+          <view class='title'>联系方式</view>
+          <input placeholder="" class='radius' name='input'></input>
+        </view>
+
+        <view class="cu-form-group margin-top" >
+    <textarea placeholder="备注" maxlength="-1" placeholder-class='placeholder'></textarea>
+  </view>
+
+      </form>
+    </view>
+  </view>
+</view>
+
+<view wx:key wx:if="{{TabCur==2}}">
+  <view class="cu-card article">
+    <view wx:for="{{myjoin}}" class="cu-item shadow">
+      <view class="title">{{item.name}}</view>
+      <view class="content">
+        <view class="desc">
+           <view class='text-content' style="color:#838d97">
+            <view>备注：{{item.hint}}</view>
+            <view>时间：{{item.time}}</view>
+            <view>地点：{{item.position}}</view>
+            
+          </view>
+          <view class=" text-blue">联系方式：{{item.phone}}</view>
+          <view class="flex justify-between">
+            <view class=' radius'>
+              <view class="cu-capsule round">
+                <view class='cu-tag bg-blue '>
+                  <text class='icon-people'></text>
+                </view>
+                <view class="cu-tag line-blue">
+                  {{item.counts}}/{{item.totalcounts}}
+                </view>
+              </view>
+            </view>
+
+          </view>
+
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

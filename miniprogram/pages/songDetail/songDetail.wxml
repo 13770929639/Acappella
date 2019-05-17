@@ -1,0 +1,82 @@
+<!--miniprogram/pages/songDetail/songDetail.wxml-->
+<view class="cu-bar bg-white input">
+  <image src="{{song.url}}" mode='widthFix' class='round cu-avatar'></image>
+  <view class='action'>
+    <text>{{song.name}}</text>
+  </view>
+  <view class='action'>
+    <text class='icon-info text-blue' bindtap="showModal" data-target="Modal"></text>
+    <block wx:if='{{isstartMusic}}'>
+        <text class='icon-stop text-blue' bindtap='startMusic'></text>
+       
+    </block>
+    <block wx:else>
+    <text  class='icon-video text-blue' bindtap='startMusic'></text>
+    </block>
+  </view>
+</view>
+<view class="cu-modal {{modalName=='Modal'?'show':''}}">
+  <view class="cu-dialog">
+    <view class="cu-bar bg-white justify-end">
+      <view class='content'>声部组成</view>
+      <view class='action' bindtap='hideModal'>
+        <text class='icon-close text-red'></text>
+      </view>
+    </view>
+    <view class='text-lg'>
+      <view class='text-blue padding '>女高音: {{song.cast[0]}}</view>
+      <view class='text-blue padding '>女中音: {{song.cast[1]}}</view>
+      <view class='text-blue padding '>男高音: {{song.cast[2]}}</view>
+      <view class='text-blue padding '>男中音: {{song.cast[3]}}</view>
+      <view class='text-blue padding'>男低音: {{song.cast[4]}}</view>
+      <view class='text-blue padding'>VP: {{song.cast[5]}}</view>
+    </view>
+  </view>
+</view>
+
+<view class="cu-card article flex padding justify-center">
+  <view  class="cu-item shadow text-center radius">
+      <view class='padding text-blue'>歌词</view>
+      
+  <scroll-view
+    scroll-y
+    style="height:350px;"
+    bindscrolltoupper="upper"
+    bindscrolltolower="lower"
+    bindscroll="scroll"
+    scroll-into-view="{{toView}}"
+    scroll-top="{{scrollTop}}"
+  >
+  <text class='text-blue'>{{song.lyric}}</text>
+</scroll-view>
+  </view>
+ 
+</view>
+
+<view class="cu-bar tabbar margin-xl">
+
+  <view class="action text-blue" bindtap='play'>
+    <view class='icon-notificationfill'></view> 回放
+  </view>
+  <view wx:if='{{isstart}}' class="action text-blue add-action"  bindtap='startsing'>
+    
+    <button class='cu-btn icon-stop bg-blue'></button>
+    停止演唱
+  </view> 
+  <view wx:else class="action text-blue add-action"  bindtap='startsing'>
+    <block wx:if='{{canSing}}'>
+    <button class='cu-btn icon-playfill bg-blue'></button>
+    开始演唱
+    </block>
+    <block wx:else>
+    <button class='cu-btn icon-playfill bg-blue'  disabled></button>
+    开始演唱
+    </block>
+    
+  </view> 
+  <view class="action text-blue ">
+    <view class='icon-check'>
+    </view>
+    提交
+  </view>
+</view>

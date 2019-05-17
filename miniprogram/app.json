@@ -1,0 +1,43 @@
+{
+  "pages": [
+    "pages/activity/activity",
+    "pages/solo/solo",
+    "pages/chorus/chorus",
+    "pages/index/index",
+    "pages/songDetail/songDetail"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "AC-阿卡",
+    "navigationBarTextStyle": "black"
+    
+  },
+  "tabBar": {
+    "color": "#838d97",
+    "selectedColor": "#81aad4",
+    "list": [
+      {
+        "pagePath": "pages/solo/solo",
+        "text": "单人",
+        "iconPath": "images/1.png",
+        "selectedIconPath": "images/2.png"
+      },
+      {
+        "pagePath": "pages/chorus/chorus",
+        "text": "多人",
+        "iconPath": "images/3.png",
+        "selectedIconPath": "images/4.png"
+      },
+      {
+        "pagePath": "pages/activity/activity",
+        "text": "活动",
+        "iconPath": "/images/5.png",
+        "selectedIconPath": "/images/6.png"
+      }
+    ]
+  }
+ 
+  
+}

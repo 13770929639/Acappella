@@ -1,0 +1,36 @@
+<!--miniprogram/pages/solo/solo.wxml-->
+<view class="cu-bar" >
+  <view class='action padding'  bindtap='changemode'>
+     <text class='icon-wefill blue'> {{mode}}</text>
+  </view>
+  <view class='action padding  text-xl'>
+    <text class=' blue'>{{hint}}</text>
+  </view>
+</view>
+<view class="text-center" bindtap='startsing'>
+  <image src="cloud://acappella-0876fc.6163-acappella-0876fc/stand.png" mode="widthFix" class="im" style="{{standstyle}}"></image>
+  <image src="cloud://acappella-0876fc.6163-acappella-0876fc/singing1.png" mode="widthFix" class="im" style="{{singing1style}}"></image>
+  <image src="cloud://acappella-0876fc.6163-acappella-0876fc/singing2.png" mode="widthFix" class="im" style="{{singing2style}}"></image>
+</view>
+
+<view class="cu-bar tabbar margin-xl hit">
+
+  <view class="action text-blue" bindtap='play'>
+    <view class='icon-notificationfill'></view> 回放
+  </view>
+  <view wx:if='{{isstart}}' class="action text-blue add-action"  bindtap='startsing'>
+    
+    <button class='cu-btn icon-stop bg-blue'></button>
+    停止演唱
+  </view> 
+  <view wx:else class="action text-blue add-action"  bindtap='startsing'>
+    
+    <button class='cu-btn icon-playfill bg-blue'></button>
+    开始演唱
+  </view> 
+  <view class="action text-blue ">
+    <view class='icon-check'>
+    </view>
+    提交
+  </view>
+</view>

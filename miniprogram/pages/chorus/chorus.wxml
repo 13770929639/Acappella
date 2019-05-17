@@ -1,0 +1,53 @@
+<!--miniprogram/pages/chorus/chorus.wxml-->
+<swiper class="card-swiper {{DotStyle?'square-dot':'round-dot'}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#0081ff">
+  <swiper-item wx:for="{{recommend}}" wx:key class="{{cardCur==index?'cur':''}}">
+
+    <image src="{{item.url}}" mode='aspectFill' class='bg-img shadow-blur' bindtap='chooseMusic'  data-id="{{item.id}}"></image>
+
+  </swiper-item>
+</swiper>
+<view wx:if="{{mysongs.length != 0}}" class="cu-bar bg-white">
+  <view class='action'>
+    <text class='icon-title text-cyan'></text>
+    <text>我的发布</text>
+  </view>
+</view>
+<view  wx:if="{{mysongs.length != 0}}" class="cu-list menu menu-avatar card margin" wx:for='{{mysongs}}'>              
+  <view class="cu-item grayscale" bindtap='chooseMyMusic' data-id="{{index}}">
+    <view class="cu-avatar radius lg" >
+      <image src="{{item.url}}" mode='widthFix'></image>
+    </view>
+    <view class='content'>
+      <view>{{item.name}}</view>
+    </view>
+    <view class='action lg'>
+      <view class='text-blue lg icon-voicefill'>{{item.count}}</view>
+      
+    </view>
+  </view>
+</view>
+<view class="cu-bar bg-white">
+  <view class='action'>
+    <text class='icon-title text-cyan'></text>
+    <text>推荐歌曲</text>
+  </view>
+</view>
+<view class="cu-list menu menu-avatar card margin" wx:for='{{songs}}'>          
+  <view class="cu-item grayscale" bindtap='chooseMusic' data-id="{{index}}">
+    <view class="cu-avatar radius lg" >
+      <image src="{{item.url}}" mode='widthFix'></image>
+    </view>
+    <view class='content'>
+      <view>{{item.name}}</view>
+      <view class='text-gray text-sm'>
+        {{item.publisher}}</view>
+    </view>
+    <view class='action lg'>
+      <view class='text-blue lg icon-voicefill'>{{item.count}}</view>
+      
+    </view>
+  </view>
+</view>
+
+
+

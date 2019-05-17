@@ -1,0 +1,6 @@
+/* miniprogram/pages/songDetail/songDetail.wxss */
+@import '../../component/colorUI/colorui.wxss';
+@import '../../component/colorUI/icon.wxss';
+.card{
+  height:400px;
+}

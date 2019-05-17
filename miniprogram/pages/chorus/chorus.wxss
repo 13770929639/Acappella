@@ -1,0 +1,6 @@
+/* miniprogram/pages/chorus/chorus.wxss */
+@import '../../component/colorUI/colorui.wxss';
+@import '../../component/colorUI/icon.wxss';
+.card{
+  border-radius:5px;
+}
