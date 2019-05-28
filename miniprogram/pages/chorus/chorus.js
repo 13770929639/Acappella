@@ -9,7 +9,7 @@ Page({
     cardCur: 0,
     recommend: [{
         id: 1,
-      url: 'cloud://acappella-0876fc.6163-acappella-0876fc/7.jpg'
+        url: 'cloud://acappella-0876fc.6163-acappella-0876fc/7.jpg'
       },
       {
         id: 3,
@@ -20,64 +20,60 @@ Page({
         url: 'cloud://acappella-0876fc.6163-acappella-0876fc/5.jpg'
       },
     ],
-    mysongs: [{
-      id: 5,
-      name: '遺サレタ場所／遮光',
-      url: 'cloud://acappella-0876fc.6163-acappella-0876fc/MusicIcon/3.jpg',
-      music: 'cloud://acappella-0876fc.6163-acappella-0876fc/Music/遺サレタ場所／遮光.mp3',
-      publisher: '岡部啓一',
-      cast: ['小红', '小明', '', '小亮', '', ''],//阵容
-      lyric: '噜噜噜啦啦啦啦啦啦啦\n啊啊啊啊啊啊啊啊啊啊',//歌词
-      count: '2'}],
+    mysongs:[],
 
-    songs: [{
-      id: 0,
-      name: 'Dragonsong',
-      url: 'cloud://acappella-0876fc.6163-acappella-0876fc/MusicIcon/1.jpg',
-      music: 'cloud://acappella-0876fc.6163-acappella-0876fc/Music/Dragonsong.mp3',
-      publisher: 'Susan',
-      cast:['小红','','小黑','小亮','','小绿'],//阵容
-      lyric: "Children of the land do you hear\nEchoes of truths that once rang clear\nTwo souls intertwined\nOne true love they did find\nBringing land and heavens near\nBut flames that burn full bright, soon fell dark\nMemories dimmed by shadowed hearts\nIn the waxing gloom did wane the lovers moon\nWatching as their worlds drift apart\nOne souls cry\nA passion dwelling within\nSacrifice, a final plea to her kin\nYet this bond of hope, by treachery was broke\nScattering her words to the wind\nSwelling over long\nSeas of blood, are a song\nAnd death an afterthought\nTo those who fight for naught\nA throne, lying empty\nA reign, incomplete\nAlone, for eternity\nA pain, without cease\nChildren of the land, answer this",//歌词
-      count: '5'
-    }, {
-      id: 1,
-      name: 'EXEC_FLIP_FUSIONSPHERE',
-      url: 'cloud://acappella-0876fc.6163-acappella-0876fc/MusicIcon/2.jpg',
-      music: 'cloud://acappella-0876fc.6163-acappella-0876fc/Music/EXEC_FLIP_FUSIONSPHERE.mp3',
-      publisher: 'V.A.',
-      cast: ['小红', '小明', '小黑', '小亮', '', '小绿'],
-      count: '1'
-    }, {
-      id: 2,
-      name: 'Anwsers',
-      url: 'cloud://acappella-0876fc.6163-acappella-0876fc/MusicIcon/3.jpg',
-      music: 'cloud://acappella-0876fc.6163-acappella-0876fc/Music/Susan Calloway - Answers.mp3',
-      publisher: 'susan',
-      cast: ['小红', '', '小黑', '小亮', '', '小绿'],
-      count: '3'
-    }, {
-      id: 3,
-      name: '梦幻',
-      publisher: 'V.A.',
-      count: '6',
-      cast: ['小红', '', '小黑', '小亮', '', '小绿'],
-      music: 'cloud://acappella-0876fc.6163-acappella-0876fc/Music/夢幻.mp3',
-      url: 'cloud://acappella-0876fc.6163-acappella-0876fc/MusicIcon/4.jpg'
-    }, {
-      id: 4,
-      name: '萤塚',
-      publisher: 'Calvaria',
-      cast: ['小红', '', '小黑', '小亮', '', '小绿'],
-      count: '6',
-      music: 'cloud://acappella-0876fc.6163-acappella-0876fc/Music/萤塚.mp3',
-      url: 'cloud://acappella-0876fc.6163-acappella-0876fc/MusicIcon/5.jpg'
-    }]
+    songs: [ //合唱歌曲，每次随机5-10个，下拉刷新
+    ]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function() {
+  
+   
+
+  },
+  onShow(){
+    //获取openid
+    var that = this
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log('[云函数] [login] user openid: ', res.result.openid)
+        wx.request({
+          url: 'http://47.102.219.51:8080/aka/song/mysong', // 我的歌曲
+          method: 'GET',
+          data: {
+            openid: res.result.openid
+          },
+          success(res) {
+            that.setData({
+              mysongs: res.data.result
+            })
+          }
+        })
+
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+        wx.navigateTo({
+          url: '../solo/solo',
+        })
+      }
+    })
+    wx.request({
+      url: 'http://47.102.219.51:8080/aka/song/songlist', // 歌曲列表
+      method: 'GET',
+      data: {
+      },
+      success(res) {
+        that.setData({
+          songs: res.data.result
+        })
+      }
+    })
 
     this.towerSwiper('tower');
   },
@@ -87,22 +83,73 @@ Page({
 
     try {
       wx.setStorageSync('song', this.data.songs[id])
+      console.error('选择歌曲', id)
     } catch (e) {}
     wx.navigateTo({
       url: '../songDetail/songDetail'
     })
   },
-  chooseMyMusic(e){
+  chooseMyMusic(e) {
 
     var id = e.currentTarget.dataset.id
 
     try {
       wx.setStorageSync('song', this.data.mysongs[id])
-    } catch (e) { }
+    } catch (e) {}
     wx.navigateTo({
       url: '../songDetail/songDetail'
     })
   },
+  //删除
+  delMusic(e) {
+    var that=this
+    var id = e.currentTarget.dataset.id
+    wx.showModal({
+      title: '',
+      content: '确定删除吗？',
+      success(res) {
+        if (res.confirm) {
+          wx.request({
+            url: 'http://47.102.219.51:8080/aka/song/' + id, // 我的歌曲
+            method: 'DELETE',
+            data: {
+            },
+            success(res) {
+              console.error(' [delMusic] 调用', res)
+              if (res.data.success == true) {
+                wx.showToast({
+                  title: '删除成功',
+                  icon: 'success',
+                  duration: 1000,
+                  mask: true
+                })
+              }
+              else {
+                wx.showToast({
+                  title: '删除失败',
+                  icon: 'fail',
+                  duration: 1000,
+                  mask: true
+                })
+              }
+
+              that.onShow()
+            },
+            fail: err => {
+
+              console.error(' [delMusic] 调用失败', err)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  
+  
+  },
+ 
+
 
   //以下是轮播用的
   DotStyle(e) {

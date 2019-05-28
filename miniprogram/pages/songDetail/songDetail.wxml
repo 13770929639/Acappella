@@ -1,8 +1,8 @@
 <!--miniprogram/pages/songDetail/songDetail.wxml-->
 <view class="cu-bar bg-white input">
-  <image src="{{song.url}}" mode='widthFix' class='round cu-avatar'></image>
+  <image src="{{song.cover}}" mode='widthFix' class='round cu-avatar'></image>
   <view class='action'>
-    <text>{{song.name}}</text>
+    <text>{{song.songName}}</text>
   </view>
   <view class='action'>
     <text class='icon-info text-blue' bindtap="showModal" data-target="Modal"></text>
@@ -23,13 +23,9 @@
         <text class='icon-close text-red'></text>
       </view>
     </view>
-    <view class='text-lg'>
-      <view class='text-blue padding '>女高音: {{song.cast[0]}}</view>
-      <view class='text-blue padding '>女中音: {{song.cast[1]}}</view>
-      <view class='text-blue padding '>男高音: {{song.cast[2]}}</view>
-      <view class='text-blue padding '>男中音: {{song.cast[3]}}</view>
-      <view class='text-blue padding'>男低音: {{song.cast[4]}}</view>
-      <view class='text-blue padding'>VP: {{song.cast[5]}}</view>
+    <view class='text-lg' wx:for="{{song.part}}">
+      <view class='text-blue padding '>{{item}}</view>
+
     </view>
   </view>
 </view>
@@ -47,7 +43,7 @@
     scroll-into-view="{{toView}}"
     scroll-top="{{scrollTop}}"
   >
-  <text class='text-blue'>{{song.lyric}}</text>
+  <text class='text-blue'>{{lyric}}</text>
 </scroll-view>
   </view>
  
@@ -74,9 +70,31 @@
     </block>
     
   </view> 
-  <view class="action text-blue ">
+  <view class="action text-blue "  bindtap="showModal" data-target="bottomModal">
     <view class='icon-check'>
     </view>
     提交
+  </view>
+</view>
+
+<view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+  <view class="cu-dialog">
+    <form>
+      <view class="cu-bar bg-white">
+        <view class='action text-blue' bindtap='hideModal'>取消</view>
+        <view class='action text-green'bindtap='formSubmit'>发布</view>
+      </view>
+      <view class='padding-xl'>
+        <view class="cu-form-group">
+          <view class='title'>声部选择</view>
+          <picker range="{{cast}}" value="{{index}}" bindchange="bindPickerChange">
+            <view class="picker">
+              {{cast[index]}}
+            </view>
+          </picker>
+        </view>
+
+      </view>
+    </form>
   </view>
 </view>

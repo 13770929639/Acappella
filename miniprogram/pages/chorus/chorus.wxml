@@ -13,15 +13,15 @@
   </view>
 </view>
 <view  wx:if="{{mysongs.length != 0}}" class="cu-list menu menu-avatar card margin" wx:for='{{mysongs}}'>              
-  <view class="cu-item grayscale" bindtap='chooseMyMusic' data-id="{{index}}">
-    <view class="cu-avatar radius lg" >
-      <image src="{{item.url}}" mode='widthFix'></image>
+  <view class="cu-item grayscale">
+    <view class="cu-avatar radius lg"  bindtap='chooseMyMusic' data-id="{{index}}" >
+      <image src="{{item.cover}}" mode='widthFix'></image>
     </view>
-    <view class='content'>
-      <view>{{item.name}}</view>
+    <view class='content'  bindtap='chooseMyMusic' data-id="{{index}}">
+      <view>{{item.songName}}</view>
     </view>
-    <view class='action lg'>
-      <view class='text-blue lg icon-voicefill'>{{item.count}}</view>
+    <view class='action lg' bindtap='delMusic' data-id="{{item.songId}}">
+      <view class='text-red lg'>删除</view>
       
     </view>
   </view>
@@ -35,15 +35,15 @@
 <view class="cu-list menu menu-avatar card margin" wx:for='{{songs}}'>          
   <view class="cu-item grayscale" bindtap='chooseMusic' data-id="{{index}}">
     <view class="cu-avatar radius lg" >
-      <image src="{{item.url}}" mode='widthFix'></image>
+      <image src="{{item.cover}}" mode='widthFix'></image>
     </view>
     <view class='content'>
-      <view>{{item.name}}</view>
+      <view>{{item.songName}}</view>
       <view class='text-gray text-sm'>
-        {{item.publisher}}</view>
+        {{item.creatorNickname}}</view>
     </view>
     <view class='action lg'>
-      <view class='text-blue lg icon-voicefill'>{{item.count}}</view>
+      <view class='text-blue lg icon-voicefill'>{{item.peopleCounting}}</view>
       
     </view>
   </view>

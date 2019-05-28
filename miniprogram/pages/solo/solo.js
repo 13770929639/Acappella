@@ -13,11 +13,53 @@ Page({
     singing1style:'display:none;',
     singing2style:'display:none;',
     hint:'',
+    nickname:'',//昵称
+    openid:'',
     isstart:false,
-    mode:'生成伴奏'
+    cast:['女高音','女中音','女低音','男高音','男中音','男低音','人声打击'],
+    mode:'生成伴奏',
+    index:0
+  },
+  showModal(e) {
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+  hideModal() {
+    this.setData({
+      modalName: null
+    })
   },
   onLoad: function (options) {
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {
+              console.error('昵称', res.userInfo)
+              this.setData({
+                nickname: res.userInfo.nickName
+              })
+            }
+          })
+        }
+      }
+    })
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {   
+        this.setData({
+          openid: res.result.openid
+        })
 
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+
+      }
+    })
   },
   startsing:function(){
     if(this.data.standstyle==''){
@@ -75,7 +117,7 @@ Page({
     innerAudioContext.autoplay = true
     innerAudioContext.src = this.tempFilePath,
       innerAudioContext.onPlay(() => {
-        console.log('开始播放')
+      console.log('开始播放' + innerAudioContext.src)
       })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
@@ -129,7 +171,57 @@ Page({
         }}
       }, 1000)
     })
-  }
+  },
+  //选择声部
+  bindPickerChange(e){
+    this.setData({
+      index: e.detail.value
+    })
+  },
+  //发布合唱
+  formSubmit(e){
+    var that=this
+    console.log('songName', this.tempFilePath)
+     wx.uploadFile({
+      url: 'http://47.102.219.51:8080/aka/song', //仅为示例，非真实的接口地址
+      filePath: this.tempFilePath,
+       name: 'songFile',
+      formData: {
+        'openid': this.data.openid,
+        'nickname': this.data.nickname,
+        'songName': this.data.songName,
+        'lyric': this.data.lyric,
+        'part': this.data.cast[this.data.index]
+      },
+      header: {
+          "Content-Type": "multipart/form-data"
+      },
+      success (res){
+        wx.showToast({
+          title: '发布成功',
+          icon: 'success',
+          duration: 1000,
+          mask: true
+        })
+        that.hideModal()
+      },
+       fail: err => {
 
+         wx.showToast({
+           title: '发布失败',
+           icon: 'none',
+           duration: 1000,
+           mask: true
+         })
+         that.hideModal()
+       }
+    })
+  },
+  inputsongName:function(e){
+     this.data.songName=e.detail.value
+  },
+  inputlyric: function (e) {
+    this.data.lyric = e.detail.value
+  },
 
 })

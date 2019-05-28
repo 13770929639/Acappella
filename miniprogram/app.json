@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/activity/activity",
-    "pages/solo/solo",
     "pages/chorus/chorus",
+    "pages/solo/solo",
     "pages/index/index",
+    "pages/activity/activity",
     "pages/songDetail/songDetail"
   ],
   "window": {
@@ -12,7 +12,6 @@
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "AC-阿卡",
     "navigationBarTextStyle": "black"
-    
   },
   "tabBar": {
     "color": "#838d97",
@@ -37,7 +36,6 @@
         "selectedIconPath": "/images/6.png"
       }
     ]
-  }
- 
-  
+  },
+  "sitemapLocation": "sitemap.json"
 }

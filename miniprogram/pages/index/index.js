@@ -55,13 +55,13 @@ Page({
         console.log('[云函数] [login] user openid: ', res.result.openid)
         app.globalData.openid = res.result.openid
         wx.navigateTo({
-          url: '../userConsole/userConsole',
+          url: '../solo/solo',
         })
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
         wx.navigateTo({
-          url: '../deployFunctions/deployFunctions',
+          url: '../solo/solo',
         })
       }
     })

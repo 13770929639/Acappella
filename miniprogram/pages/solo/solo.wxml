@@ -1,7 +1,7 @@
 <!--miniprogram/pages/solo/solo.wxml-->
-<view class="cu-bar" >
-  <view class='action padding'  bindtap='changemode'>
-     <text class='icon-wefill blue'> {{mode}}</text>
+<view class="cu-bar">
+  <view class='action padding' bindtap='changemode'>
+    <text class='icon-wefill blue'> {{mode}}</text>
   </view>
   <view class='action padding  text-xl'>
     <text class=' blue'>{{hint}}</text>
@@ -18,19 +18,50 @@
   <view class="action text-blue" bindtap='play'>
     <view class='icon-notificationfill'></view> 回放
   </view>
-  <view wx:if='{{isstart}}' class="action text-blue add-action"  bindtap='startsing'>
-    
+  <view wx:if='{{isstart}}' class="action text-blue add-action" bindtap='startsing'>
+
     <button class='cu-btn icon-stop bg-blue'></button>
     停止演唱
-  </view> 
-  <view wx:else class="action text-blue add-action"  bindtap='startsing'>
-    
+  </view>
+  <view wx:else class="action text-blue add-action" bindtap='startsing'>
+
     <button class='cu-btn icon-playfill bg-blue'></button>
     开始演唱
-  </view> 
-  <view class="action text-blue ">
+  </view>
+  <view class="action text-blue " bindtap="showModal" data-target="bottomModal">
     <view class='icon-check'>
     </view>
     提交
+  </view>
+</view>
+
+<view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+  <view class="cu-dialog">
+    <form>
+      <view class="cu-bar bg-white">
+        <view class='action text-blue' bindtap='hideModal'>取消</view>
+        <view class='action text-green'bindtap='formSubmit'>发布</view>
+      </view>
+      <view class='padding-xl'>
+        <view class="cu-form-group margin-top">
+          <view class='title'>歌曲名称</view>
+          <input placeholder="" class='radius' bindinput='inputsongName'></input>
+        </view>
+        <view class="cu-form-group">
+          <view class='title'>声部选择</view>
+          <picker range="{{cast}}" value="{{index}}" bindchange="bindPickerChange">
+            <view class="picker">
+              {{cast[index]}}
+            </view>
+          </picker>
+        </view>
+
+        <view class="cu-form-group margin-top">
+          <textarea placeholder="歌词" maxlength="-1" placeholder-class='placeholder' bindinput='inputlyric'></textarea>
+        </view>
+
+
+      </view>
+    </form>
   </view>
 </view>

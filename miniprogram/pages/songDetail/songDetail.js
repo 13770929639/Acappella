@@ -14,7 +14,9 @@ Page({
     parts:1,//自己的声部,女中音
     canSing:true,//是否有权演唱
     toView: 'red',
-    scrollTop: 100
+    scrollTop: 100,
+    cast: ['女高音', '女中音', '女低音', '男高音', '男中音', '男低音', '人声打击'],
+    index:0
 
   
   },
@@ -24,28 +26,24 @@ Page({
    */
   onLoad: function(options) {
     var that = this
+   
     try {
       var value = wx.getStorageSync('song')
-      if (value) {
-        console.log("hello?",value.cast[1])
+        console.log("detail"+value)
+      var text = value.lyric
+      var des = text.split('\\n').join('\n');
+       des = des.split('\\r').join('\r');
+          this.setData({
+            canSing:true,
+            song: value,
+            isstartMusic: false,
+            lyric:des
+          })
+       
+   
+        
+
       
-        if (value.cast[this.data.parts]!=''){
-          
-          this.setData({
-            canSing:false,
-            song: value,
-            isstartMusic: false
-          })
-        }
-        else{
-          this.setData({
-            song: value,
-            isstartMusic: false
-          })
-
-        }
-
-      }
       
     } catch (e) {
       // Do something when catch error
@@ -58,7 +56,8 @@ Page({
   },
   onReady(){
     this.innerAudioContext = wx.createInnerAudioContext()
-    this.innerAudioContext.src = this.data.song.music
+    this.innerAudioContext.src = this.data.song.songFiles[0]
+    console.log(this.data.song.songFiles[0])
   },
   startMusic() {
     if (this.data.isstartMusic==false){
@@ -141,6 +140,7 @@ Page({
 
   //播放声音
   play: function () {
+    this.startMusic()
     innerAudioContext.autoplay = true
     innerAudioContext.src = this.tempFilePath,
       innerAudioContext.onPlay(() => {
@@ -150,6 +150,21 @@ Page({
       console.log(res.errMsg)
       console.log(res.errCode)
     })
-  }
- 
+  },
+  showModal(e) {
+    this.setData({
+      modalName: e.currentTarget.dataset.target
+    })
+  },
+  hideModal() {
+    this.setData({
+      modalName: null
+    })
+  },
+  //选择声部
+  bindPickerChange(e) {
+    this.setData({
+      index: e.detail.value
+    })
+  },
 })
