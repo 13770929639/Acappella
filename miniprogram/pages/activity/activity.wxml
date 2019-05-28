@@ -23,11 +23,12 @@
       <view class="content">
         <view class="desc">
           <view class='text-content' style="color:#838d97">
-            <view>备注：{{item.hint}}</view>
+            <view>备注：{{item.comment}}</view>
             <view>时间：{{item.time}}</view>
-            <view>地点：{{item.position}}</view>
-            
+            <view>地点：{{item.location}}</view>
+
           </view>
+          <view class=" text-blue">创建者：{{item.creatorNickname}}</view>
           <view class=" text-blue">联系方式：{{item.phone}}</view>
           <view class="flex justify-between">
             <view class=' radius'>
@@ -36,12 +37,12 @@
                   <text class='icon-people'></text>
                 </view>
                 <view class="cu-tag line-blue">
-                  {{item.counts}}/{{item.totalcounts}}
+                  {{item.nowPeopleCounting}}/{{item.maxPeopleCounting}}
                 </view>
               </view>
             </view>
             <view class=' radius'>
-              <button class='cu-btn round bg-gradual-blue shadow-blur'>参加</button>
+              <button class='cu-btn round bg-gradual-blue shadow-blur' bindtap='jion' id='{{item.activityId}}'>参加</button>
             </view>
           </view>
 
@@ -63,9 +64,9 @@
       <view class="content">
         <view class="desc">
            <view class='text-content' style="color:#838d97">
-            <view>备注：{{item.hint}}</view>
+            <view>备注：{{item.comment}}</view>
             <view>时间：{{item.time}}</view>
-            <view>地点：{{item.position}}</view>
+            <view>地点：{{item.location}}</view>
             
           </view>
           <view class=" text-blue">联系方式：{{item.phone}}</view>
@@ -76,12 +77,12 @@
                   <text class='icon-people'></text>
                 </view>
                 <view class="cu-tag line-blue">
-                  {{item.counts}}/{{item.totalcounts}}
+                  {{item.nowPeopleCounting}}/{{item.maxPeopleCounting}}
                 </view>
               </view>
             </view>
             <view class=' radius'>
-              <button class='cu-btn  round line-red'>删除</button>
+              <button class='cu-btn  round line-red' bindtap='delete' data-index='{{index}}' data-id='{{item.activityId}}'>删除</button>
             </view>
           </view>
 
@@ -94,14 +95,14 @@
   <view class="cu-dialog">
     <view class="cu-bar bg-white">
       <view class='action text-blue' bindtap='hideModal'>取消</view>
-      <view class='action text-green' bindtap='hideModal'>发布</view>
+      <view class='action text-green' bindtap='PushActivity'>发布</view>
     </view>
     <view class='padding-xl'>
       <form>
 
         <view class="cu-form-group margin-top">
           <view class='title'>活动名称</view>
-          <input placeholder="" class='radius' name='input'></input>
+          <input placeholder="" class='radius' name='input'bindblur='NameChange'></input>
         </view>
 
         <view class="cu-form-group">
@@ -123,17 +124,22 @@
         </view>
 
         <view class="cu-form-group margin-top">
+          <view class='title'>最大参与人数</view>
+          <input placeholder="" class='radius' name='Counting' bindblur='CountingChange'></input>
+        </view>
+
+        <view class="cu-form-group margin-top">
           <view class='title'>地址</view>
-          <input placeholder="" class='radius' name='input'></input>
+          <input placeholder="" class='radius' name='location' bindblur='LoactionChange'></input>
         </view>
 
         <view class="cu-form-group margin-top">
           <view class='title'>联系方式</view>
-          <input placeholder="" class='radius' name='input'></input>
+          <input placeholder="" class='radius' name='phone' bindblur='PhoneChange'></input>
         </view>
 
         <view class="cu-form-group margin-top" >
-    <textarea placeholder="备注" maxlength="-1" placeholder-class='placeholder'></textarea>
+    <textarea placeholder="备注" maxlength="-1" placeholder-class='placeholder' bindinput='CommentChange'></textarea>
   </view>
 
       </form>
@@ -148,9 +154,9 @@
       <view class="content">
         <view class="desc">
            <view class='text-content' style="color:#838d97">
-            <view>备注：{{item.hint}}</view>
+            <view>备注：{{item.comment}}</view>
             <view>时间：{{item.time}}</view>
-            <view>地点：{{item.position}}</view>
+            <view>地点：{{item.location}}</view>
             
           </view>
           <view class=" text-blue">联系方式：{{item.phone}}</view>
@@ -161,7 +167,7 @@
                   <text class='icon-people'></text>
                 </view>
                 <view class="cu-tag line-blue">
-                  {{item.counts}}/{{item.totalcounts}}
+                  {{item.nowPeopleCounting}}/{{item.maxPeopleCounting}}
                 </view>
               </view>
             </view>

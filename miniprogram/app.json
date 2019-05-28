@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/chorus/chorus",
     "pages/solo/solo",
+    "pages/chorus/chorus",
     "pages/index/index",
     "pages/activity/activity",
     "pages/songDetail/songDetail"

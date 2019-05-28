@@ -20,10 +20,33 @@ Page({
     mode:'生成伴奏',
     index:0
   },
+  //提交
   showModal(e) {
+    if(this.data.mode=='生成伴奏'){
     this.setData({
       modalName: e.currentTarget.dataset.target
-    })
+    })}
+    else{
+      wx.showToast({
+        title: '正在计算',
+        icon: 'loading',
+        duration: 1000,
+        mask: true
+      })
+      wx.showModal({
+        title: '测试音高',
+        content:this.data.cast[Math.floor(Math.random() * 6)],
+        showCancel:false,
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+      
+    }
   },
   hideModal() {
     this.setData({

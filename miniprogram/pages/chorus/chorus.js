@@ -52,6 +52,7 @@ Page({
             that.setData({
               mysongs: res.data.result
             })
+            console.error("songs" ,res.data.result)
           }
         })
 
